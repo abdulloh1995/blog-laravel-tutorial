@@ -1,15 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Companies</title>
-</head>
-<body>
-    <h1>Lists of Companies</h1>
+@extends('layouts.app')
+@section('content')
+    <h1 class="text-center">Lists of Companies</h1>
     <br>
-    <table border="1">
+    <table class="table table-bordered">
         <thead>
             <tr>
                 <td>ID</td>
@@ -21,7 +14,7 @@
             <tbody>
                 @foreach ($companies as $company)
                     <tr>
-                        <td>{{ ($loop->index+1) }}</td>
+                        <td>{{ ($companies->currentpage()-1)*$companies->perpage() + ($loop->index+1) }}</td>
                         <td>{{ $company->name }}</td>
                         <td>{{ $company->address }}</td>
                         <td>{{ $company->phone }}</td>
@@ -29,5 +22,5 @@
                 @endforeach
             </tbody>
     </table>
-</body>
-</html>
+    {{ $companies->links() }}
+@endsection
