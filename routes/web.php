@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShowProfileController;
 use App\Http\Controllers\UserController;
@@ -21,12 +22,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/user/{name?}', [UserController::class, 'show']);
-Route::get('/users', [UserController::class, 'list']);
-Route::get('/show/{id}', ShowProfileController::class);
-Route::get('/home', [HomeController::class, 'index']);
-Route::get('/members', [HomeController::class, 'members']);
-Route::get('/about', [HomeController::class, 'about']);
+// Route::get('/user/{name?}', [UserController::class, 'show']);
+// Route::get('/users', [UserController::class, 'list']);
+// Route::get('/show/{id}', ShowProfileController::class);
+// Route::get('/home', [HomeController::class, 'index']);
+// Route::get('/members', [HomeController::class, 'members']);
+// Route::get('/about', [HomeController::class, 'about']);
+// Route::get('/about', [HomeController::class, 'about']);
+
+Route::resource('companies', CompaniesController::class);
 
 // Route::get('/hello/{name?}', function ($name=null) {
 //     return 'Hello '. $name;
