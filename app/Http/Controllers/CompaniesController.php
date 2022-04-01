@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
 
 class CompaniesController extends Controller
@@ -14,7 +15,7 @@ class CompaniesController extends Controller
      */
     public function index()
     {
-        $companies = Company::paginate(10);
+        $companies = Company::orderByDesc('created_at')->paginate(10);
         // dd($companies);
         return view('companies.index', [
             'companies'=>$companies
@@ -42,10 +43,19 @@ class CompaniesController extends Controller
         $data = $request->validate([
             'name'=>'required',
             'address'=>'required',
-            'phone'=>'required'
+            'phone'=>['required', 'numeric', new PhoneNumber]
         ]);
 
-        dd($data);
+
+        $company = Company::create($data);
+        // dd($data);
+        // $company = new Company;
+        // $company->name = $data['name'];
+        // $company->address = $data['address'];
+        // $company->phone = $data['phone'];
+        // $company->save();
+
+        return redirect()->route('companies.index');
     }
 
     /**

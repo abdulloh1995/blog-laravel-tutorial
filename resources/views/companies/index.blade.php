@@ -10,10 +10,10 @@
     <table class="table table-bordered">
         <thead>
             <tr>
-                <td>ID</td>
-                <td>NAME</td>
-                <td>ADDRESS</td>
-                <td>PHONE</td>
+                <th>ID</th>
+                <th>NAME</th>
+                <th>ADDRESS</th>
+                <th>PHONE</th>
             </tr>
         </thead>
             <tbody>
