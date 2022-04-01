@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('content')
     <h1 class="text-center">Lists of Companies</h1>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+        <a href="{{ route('companies.create') }}">
+            <button class="btn btn-success" type="button">add company</button>
+        </a>
+        </div>
     <br>
     <table class="table table-bordered">
         <thead>
