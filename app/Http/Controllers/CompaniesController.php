@@ -47,7 +47,7 @@ class CompaniesController extends Controller
         ]);
 
 
-        $company = Company::create($data);
+        Company::create($data);
         // dd($data);
         // $company = new Company;
         // $company->name = $data['name'];
@@ -78,9 +78,11 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Company $company)
     {
-        //
+        return view('companies.edit', [
+            'company' => $company
+        ]);
     }
 
     /**
@@ -90,9 +92,18 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Company $company)
     {
-        //
+        $data = $request->validate([
+            'name'=>'required',
+            'address'=>'required',
+            'phone'=>['required', 'numeric', new PhoneNumber]
+        ]);
+
+        $company->update($data);
+
+        return redirect()->route('companies.index');
+
     }
 
     /**
