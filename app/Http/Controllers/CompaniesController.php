@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveCompanyRequest;
 use App\Models\Company;
 use App\Rules\PhoneNumber;
 use Illuminate\Http\Request;
@@ -29,7 +30,10 @@ class CompaniesController extends Controller
      */
     public function create()
     {
-        return view('companies.create');
+        $company = new Company();
+        return view('companies.create', [
+            'company' => $company
+        ]);
     }
 
     /**
@@ -38,16 +42,12 @@ class CompaniesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SaveCompanyRequest $request)
     {
-        $data = $request->validate([
-            'name'=>'required',
-            'address'=>'required',
-            'phone'=>['required', 'numeric', new PhoneNumber]
-        ]);
+        
 
 
-        Company::create($data);
+        Company::create($request->validated());
         // dd($data);
         // $company = new Company;
         // $company->name = $data['name'];
@@ -92,15 +92,10 @@ class CompaniesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Company $company)
+    public function update(SaveCompanyRequest $request, Company $company)
     {
-        $data = $request->validate([
-            'name'=>'required',
-            'address'=>'required',
-            'phone'=>['required', 'numeric', new PhoneNumber]
-        ]);
 
-        $company->update($data);
+        $company->update($request->validated());
 
         return redirect()->route('companies.index');
 
@@ -116,4 +111,13 @@ class CompaniesController extends Controller
     {
         //
     }
+
+    // public function validatedData()
+    // {
+    //     return request()->validate([
+    //         'name'=>'required',
+    //         'address'=>'required',
+    //         'phone'=>['required', 'numeric', new PhoneNumber]
+    //     ]);
+    // }
 }
